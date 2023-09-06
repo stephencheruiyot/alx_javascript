@@ -7,3 +7,6 @@ class Rectangle {
     }
     
 }
+
+const Rectangle = new Rectangle(w, h);
+console.log(`Rectangle is ${Rectangle}`);
