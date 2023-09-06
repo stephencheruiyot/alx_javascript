@@ -39,8 +39,7 @@ for (let i = 0; i < arrayOfStrings.length; i++) {
 The twelfth file, 12-object.js, creates a JavaScript object and then prints the object to the console. This example shows how to use JavaScript to create an object and print it to the console.
 
 javascript
-Copy code
-#!/usr/bin/node
+
 const myObject = {
     type: 'object',
     value: 12
