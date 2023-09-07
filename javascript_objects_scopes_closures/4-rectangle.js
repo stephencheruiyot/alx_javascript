@@ -3,9 +3,8 @@ class Rectangle {
       if (w > 0 && h > 0) {
          // Create an empty object if w or h is not a positive integer
       }
-  
-      this.width = w;
-      this.height = h;
+          this.width = w;
+          this.height = h;
     }
   
     print() {
