@@ -5,5 +5,5 @@ const Rectangle = require('./4-rectangle');
     }
   }
   
-  module.exports = { Rectangle, Square };
+  module.exports = {Square };
     
