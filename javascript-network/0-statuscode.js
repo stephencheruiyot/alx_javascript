@@ -1,15 +1,13 @@
 #!/usr/bin/env node
 const request = require('request');
 
-// Define the URL you want to request
-const urlToRequest = 'https://intranet.alxswe.com';
+const url = process.argv[2];
 
-// Make the GET request
-request('urlToRequest', (error, response) => {
-    if (error){
-        console.error('Error: ${error.message}');
-    } else {
-        // Display the status code
-    console.log('Code:, ${response.statusCode}');
-    }
+request.get(url, (error, response) => {
+  if (error) {
+    console.error(`Error: ${error.message}`);
+    process.exit(1);
+  }
+
+  console.log(`code: ${response.statusCode}`);
 });
