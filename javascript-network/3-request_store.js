@@ -23,7 +23,7 @@ request(url, (error, response, body) => {
       if (err) {
         console.error('Error writing to file:', err);
       } else {
-        console.log(`Webpage content saved to ${filePath}`);
+        console.log();
       }
     });
   }
