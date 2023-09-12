@@ -2,12 +2,6 @@
 const request = require('request');
 const fs = require('fs');
 
-// Check if the correct number of arguments is provided
-if (process.argv.length !== 4) {
-  console.error('Usage: node downloadAndSave.js <URL> <outputFilePath>');
-  process.exit(1);
-}
-
 const url = process.argv[2];
 const filePath = process.argv[3];
 
