@@ -5,9 +5,9 @@ const request = require('request');
 const urlToRequest = 'https://intranet.alxswe.com';
 
 // Make the GET request
-request('urlToRequest', function (error, response) {
+request('urlToRequest', (error, response) => {
     if (error){
-        console.log('Error: ${error.message}');
+        console.error('Error: ${error.message}');
     } else {
         // Display the status code
     console.log('Code:, ${response.statusCode}');
