@@ -1,7 +1,7 @@
 const request = require('request');
 
-
-const apiUrl = process.argv[2];
+ 
+const apiUrl = 'https://swapi-api.alx-tools.com/api/films/';
 
 request.get(apiUrl, (error, response, body) => {
   if (error) {
@@ -25,4 +25,4 @@ request.get(apiUrl, (error, response, body) => {
     console.error('Error parsing JSON response:', parseError.message);
     process.exit(1);
   }
-});
+})
