@@ -22,7 +22,7 @@ request(url, (error, response, body) => {
       if (err) {
         console.error('Error writing to file:', err);
       } else {
-        console.log(`[Got]\n\n${content}\n\n(${content.length} chars long)`);
+        console.log();
       }
     });
   }
