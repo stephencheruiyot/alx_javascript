@@ -1,4 +1,4 @@
-#!usr/bin/env node
+#!/usr/bin/env node
 const request = require('request');
 const fs = require('fs');
 
@@ -17,7 +17,7 @@ request(url, (error, response, body) => {
       if (err) {
         console.error('Error writing to file:', err);
       } else {
-        console.log();
+        console.log(`Webpage content saved to ${filePath}`);
       }
     });
   }
