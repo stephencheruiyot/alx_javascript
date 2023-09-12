@@ -1,7 +1,11 @@
 const request = require('request');
 
- 
-const apiUrl = 'https://swapi-api.alx-tools.com/api/films/';
+if (process.argv.length !== 3) {
+  console.error('Usage: node 2-starwars_count.js <API_URL>');
+  process.exit(1);
+}
+
+const apiUrl = process.argv[2];
 
 request.get(apiUrl, (error, response, body) => {
   if (error) {
@@ -15,14 +19,18 @@ request.get(apiUrl, (error, response, body) => {
   }
 
   try {
-    const filmData = JSON.parse(body);
-    const wedgeAntillesFilms = filmData.results.filter(film =>
-      film.characters.includes('https://swapi-api.alx-tools.com/api/people/18/')
-    );
+    const filmsData = JSON.parse(body);
+    const characterId = 18; // Wedge Antilles
+    const numberOfMoviesWithWedgeAntilles = filmsData.results.reduce((count, movie) => {
+      if (movie.characters.includes(`https://swapi-api.alx-tools.com/api/people/${characterId}/`)) {
+        count++;
+      }
+      return count;
+    }, 0);
 
-    console.log(wedgeAntillesFilms.length);
+    console.log(numberOfMoviesWithWedgeAntilles);
   } catch (parseError) {
     console.error('Error parsing JSON response:', parseError.message);
     process.exit(1);
   }
-})
+});
