@@ -1,5 +1,4 @@
 #!usr/bin/node
-
 //function named welcome
 function welcome(firstName, lastName) {
     var fullName = firstName + ' ' + lastName;
