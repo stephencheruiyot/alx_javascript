@@ -1,36 +1,39 @@
+// Import the 'request' module
 const request = require('request');
 
-if (process.argv.length !== 3) {
-  console.error('Usage: node 2-starwars_count.js <API_URL>');
-  process.exit(1);
+// Define the API URL for Star Wars films
+const apiUrl = 'https://swapi-api.alx-tools.com/api/films/';
+
+// Character ID for "Wedge Antilles"
+const characterId = 18;
+
+// Function to count movies with "Wedge Antilles"
+function countMoviesWithWedgeAntilles(apiUrl, characterId) {
+  // Send a GET request to the Star Wars API
+  request(apiUrl, (error, response, body) => {
+    // Check for any errors in the request
+    if (error) {
+      console.error('Error:', error);
+    } else {
+      // Parse the JSON response
+      const films = JSON.parse(body);
+
+      // Initialize a counter for movies with "Wedge Antilles"
+      let count = 0;
+
+      // Iterate through the films
+      films.forEach((film) => {
+        // Check if the character ID is present in the 'characters' array
+        if (film.characters.includes(`https://swapi-api.alx-tools.com/api/people/${characterId}/`)) {
+          count++;
+        }
+      });
+
+      // Print the count of movies with "Wedge Antilles"
+      console.log(`Number of movies with Wedge Antilles: ${count}`);
+    }
+  });
 }
 
-const apiUrl = process.argv[2];
-
-request.get(apiUrl, (error, response, body) => {
-  if (error) {
-    console.error(`Error: ${error.message}`);
-    process.exit(1);
-  }
-
-  if (response.statusCode !== 200) {
-    console.error(`Error: Status code ${response.statusCode}`);
-    process.exit(1);
-  }
-
-  try {
-    const filmsData = JSON.parse(body);
-    const characterId = 18; // Wedge Antilles
-    const numberOfMoviesWithWedgeAntilles = filmsData.results.reduce((count, movie) => {
-      if (movie.characters.includes(`https://swapi-api.alx-tools.com/api/people/${characterId}/`)) {
-        count++;
-      }
-      return count;
-    }, 0);
-
-    console.log(numberOfMoviesWithWedgeAntilles);
-  } catch (parseError) {
-    console.error('Error parsing JSON response:', parseError.message);
-    process.exit(1);
-  }
-});
+// Call the function to count movies with "Wedge Antilles"
+countMoviesWithWedgeAntilles(apiUrl, characterId);
