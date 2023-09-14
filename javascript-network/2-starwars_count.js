@@ -16,11 +16,11 @@ request(apiUrl, (error, response, body) => {
 
   const films = JSON.parse(body).results;
   const numberOfMoviesWithWedgeAntilles = films.reduce((count, film) => {
-    if (film.characters.includes(`https://swapi-api.alx-tools.com/api/people/ ${characterId}`)) {
+    if (film.characters.includes(`https://swapi-api.alx-tools.com/api/people/${characterId}/`)) {
       count++;
     }
     return count;
   }, 0);
 
-  console.log(numberOfMoviesWithWedgeAntilles);
+ 
 });
