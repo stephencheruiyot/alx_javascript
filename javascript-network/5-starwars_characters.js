@@ -21,24 +21,38 @@ function fetchCharactersForMovie(url) {
     } else {
       const movieData = JSON.parse(body);
       console.log(`Characters in "${movieData.title}":`);
-      movieData.characters.forEach((characterUrl) => {
-        fetchCharacterName(characterUrl);
-      });
+      const charactersUrls = movieData.characters;
+      fetchCharacterNames(charactersUrls);
     }
   });
 }
 
 // Function to fetch and print character names
-function fetchCharacterName(url) {
-  request(url, (error, response, body) => {
-    if (error) {
-      console.error('Error:', error);
-    } else if (response.statusCode !== 200) {
-      console.error(`HTTP Error: ${response.statusCode}`);
-    } else {
-      const characterData = JSON.parse(body);
-      console.log(characterData.name);
-    }
+function fetchCharacterNames(urls) {
+  const characters = [];
+  let count = 0;
+
+  urls.forEach((url) => {
+    request(url, (error, response, body) => {
+      if (error) {
+        console.error('Error:', error);
+      } else if (response.statusCode !== 200) {
+        console.error(`HTTP Error: ${response.statusCode}`);
+      } else {
+        const characterData = JSON.parse(body);
+        characters.push(characterData.name);
+      }
+
+      count++;
+
+      if (count === urls.length) {
+        // All character names fetched, now print them
+        characters.sort(); // Sort characters alphabetically
+        characters.forEach((characterName) => {
+          console.log(characterName);
+        });
+      }
+    });
   });
 }
 
