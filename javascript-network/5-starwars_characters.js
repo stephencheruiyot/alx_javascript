@@ -1,65 +1,44 @@
 const request = require('request');
 
-// Get the Movie ID from command-line arguments
-const movieId = process.argv[2];
+// Function to fetch and print characters from a Star Wars movie
+function printCharactersFromMovie(movieId) {
+  // Construct the URL to fetch movie details
+  const movieUrl = `https://swapi.dev/api/films/${movieId}/`;
 
-if (!movieId || isNaN(movieId)) {
-  console.log('Please provide a valid Movie ID as the first argument.');
-  process.exit(1);
-}
-
-// Define the URL to fetch movie details from SWAPI
-const movieUrl = `https://swapi.dev/api/films/${movieId}/`;
-
-// Function to fetch movie details and extract character URLs
-function fetchCharactersForMovie(url) {
-  request(url, (error, response, body) => {
+  // Make a request to get movie details
+  request(movieUrl, (error, response, body) => {
     if (error) {
       console.error('Error:', error);
     } else if (response.statusCode !== 200) {
-      console.error(`HTTP Error: ${response.statusCode}`);
+      console.error('Invalid status code:', response.statusCode);
     } else {
-      const movieData = JSON.parse(body);
-      console.log(`Characters in "${movieData.title}":`);
-      const characterUrls = movieData.characters;
-      fetchCharacterNames(characterUrls);
+      const movie = JSON.parse(body);
+
+      console.log(`Characters in "${movie.title}":`);
+      console.log('------------------------');
+
+      // Iterate through characters in the movie
+      movie.characters.forEach((characterUrl) => {
+        // Make a request to get character details
+        request(characterUrl, (error, response, body) => {
+          if (error) {
+            console.error('Error:', error);
+          } else if (response.statusCode !== 200) {
+            console.error('Invalid status code:', response.statusCode);
+          } else {
+            const character = JSON.parse(body);
+            console.log(character.name);
+          }
+        });
+      });
     }
   });
 }
 
-// Function to fetch and print character names
-function fetchCharacterNames(urls) {
-  const characters = [];
-
-  function fetchCharacter(url) {
-    request(url, (error, response, body) => {
-      if (error) {
-        console.error('Error:', error);
-      } else if (response.statusCode !== 200) {
-        console.error(`HTTP Error: ${response.statusCode}`);
-      } else {
-        const characterData = JSON.parse(body);
-        characters.push(characterData.name);
-      }
-
-      if (urls.length > 0) {
-        const nextUrl = urls.shift();
-        fetchCharacter(nextUrl);
-      } else {
-        // All character names fetched, now print them
-        characters.sort(); // Sort characters alphabetically
-        characters.forEach((characterName) => {
-          console.log(characterName);
-        });
-      }
-    });
-  }
-
-  if (urls.length > 0) {
-    const nextUrl = urls.shift();
-    fetchCharacter(nextUrl);
-  }
+// Usage example: Specify the movie ID as an argument (e.g., 3 for "Return of the Jedi")
+const movieId = process.argv[2];
+if (!movieId) {
+  console.error('Please provide a movie ID as an argument.');
+} else {
+  printCharactersFromMovie(movieId);
 }
-
-// Fetch characters for the specified movie
-fetchCharactersForMovie(movieUrl);
