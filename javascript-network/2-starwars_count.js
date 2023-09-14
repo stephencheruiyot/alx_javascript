@@ -2,7 +2,7 @@
 const request = require('request');
 
 const apiUrl = 'https://swapi-api.alx-tools.com/api/films/'
-const wedgeA = 18
+
 // Make a GET request to the Star Wars API
 request(apiUrl, (response, body) => {
   
