@@ -1,7 +1,7 @@
 #!/usr/bin/node
 const request = require('request');
 
-const apiUrl = 'https://swapi-api.alx-tools.com/api/films/';
+let apiUrl = 'https://swapi-api.alx-tools.com/api/films/';
 
 // Make a GET request to the Star Wars API
 request(apiUrl, (error, response, body) => {
