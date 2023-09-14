@@ -24,4 +24,4 @@ function countMoviesWithWedgeAntilles(apiUrl) {
   });
 };
 
-countMoviesWithWedgeAntilles(apiUrl);
+//countMoviesWithWedgeAntilles(apiUrl);
