@@ -28,7 +28,7 @@ function countMoviesWithWedgeAntilles(apiUrl, characterId) {
         // Iterate through the films
         films.forEach((film) => {
           // Check if the character ID is present in the 'characters' array
-          if (film.characters.includes(`https://swapi-api.alx-tools.com/api/people/18/`)) {
+          if (film.characters.includes(`https://swapi-api.alx-tools.com/api/people/${characterId}/`)) {
             count++;
           }
         });
