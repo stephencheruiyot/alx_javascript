@@ -21,6 +21,6 @@ request(apiUrl, (error, response, body) => {
     }
     return count;
   }, 0);
-
+console.log(numberOfMoviesWithWedgeAntilles);
  
 });
