@@ -11,7 +11,7 @@ if (!movieId || isNaN(movieId)) {
 // Define the URL to fetch movie details from SWAPI
 const movieUrl = `https://swapi.dev/api/films/${movieId}/`;
 
-// Function to fetch characters for a given movie
+// Function to fetch movie details and extract character URLs
 function fetchCharactersForMovie(url) {
   request(url, (error, response, body) => {
     if (error) {
@@ -21,8 +21,8 @@ function fetchCharactersForMovie(url) {
     } else {
       const movieData = JSON.parse(body);
       console.log(`Characters in "${movieData.title}":`);
-      const charactersUrls = movieData.characters;
-      fetchCharacterNames(charactersUrls);
+      const characterUrls = movieData.characters;
+      fetchCharacterNames(characterUrls);
     }
   });
 }
@@ -30,9 +30,8 @@ function fetchCharactersForMovie(url) {
 // Function to fetch and print character names
 function fetchCharacterNames(urls) {
   const characters = [];
-  let count = 0;
 
-  urls.forEach((url) => {
+  function fetchCharacter(url) {
     request(url, (error, response, body) => {
       if (error) {
         console.error('Error:', error);
@@ -43,9 +42,10 @@ function fetchCharacterNames(urls) {
         characters.push(characterData.name);
       }
 
-      count++;
-
-      if (count === urls.length) {
+      if (urls.length > 0) {
+        const nextUrl = urls.shift();
+        fetchCharacter(nextUrl);
+      } else {
         // All character names fetched, now print them
         characters.sort(); // Sort characters alphabetically
         characters.forEach((characterName) => {
@@ -53,7 +53,12 @@ function fetchCharacterNames(urls) {
         });
       }
     });
-  });
+  }
+
+  if (urls.length > 0) {
+    const nextUrl = urls.shift();
+    fetchCharacter(nextUrl);
+  }
 }
 
 // Fetch characters for the specified movie
