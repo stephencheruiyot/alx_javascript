@@ -34,7 +34,7 @@ function countMoviesWithWedgeAntilles(apiUrl, characterId) {
         });
 
         // Print the count of movies with "Wedge Antilles"
-        console.log({count});
+        console.log();
       } else {
         console.error('Invalid API response format');
       }
