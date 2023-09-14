@@ -16,7 +16,7 @@ request(apiUrl, (error, response, body) => {
 
   const films = JSON.parse(body).results;
   const numberOfMoviesWithWedgeAntilles = films.reduce((count, film) => {
-    if (film.characters.includes(`https//...${characterId}`)) {
+    if (film.characters.includes(`https//swapi ${characterId}`)) {
       count++;
     }
     return count;
