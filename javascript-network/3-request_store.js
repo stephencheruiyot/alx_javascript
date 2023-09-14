@@ -13,6 +13,12 @@ request.get(url, (error, response, body) => {
     process.exit(1);
   }
 
-console.log();
+   // Write the response body to a file
+   fs.writeFile(filePath, body, { encoding: utf8 }, (err) => {
+    if (err) {
+      console.error('Error writing to the file:', err);
+      process.exit(1);
+    }
+  }
 
-});
+   )});
