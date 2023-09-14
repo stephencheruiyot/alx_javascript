@@ -1,13 +1,11 @@
+#!/usr/bin/node
 const request = require('request');
 
 const apiUrl = 'https://swapi-api.alx-tools.com/api/films/'
-
+const wedgeA = 18
 // Make a GET request to the Star Wars API
-request(apiUrl, (error, response, body) => {
-  if (error) {
-    console.error('Error:', error);
-    process.exit(1);
-  }
+request(apiUrl, (response, body) => {
+  
 
   // Parse the API response
   const data = JSON.parse(body);
