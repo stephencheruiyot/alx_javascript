@@ -1,38 +1,33 @@
-const request = require('request');
+const axios = require('axios');
 
 // Function to fetch and print characters from a Star Wars movie
-function printCharactersFromMovie(movieId) {
-  // Construct the URL to fetch movie details
-  const movieUrl = `https://swapi.dev/api/films/${movieId}/`;
+async function printCharactersFromMovie(movieId) {
+  try {
+    // Fetch movie details
+    const movieResponse = await axios.get(`https://swapi.dev/api/films/${movieId}/`);
+    const movie = movieResponse.data;
 
-  // Make a request to get movie details
-  request(movieUrl, (error, response, body) => {
-    if (error) {
-      console.error('Error:', error);
-    } else if (response.statusCode !== 200) {
-      console.error('Invalid status code:', response.statusCode);
-    } else {
-      const movie = JSON.parse(body);
+    console.log(`Characters in "${movie.title}":`);
+    console.log('------------------------');
 
-      console.log(`Characters in "${movie.title}":`);
-      console.log('------------------------');
+    // Create an array of character request promises
+    const characterRequests = movie.characters.map(async (characterUrl) => {
+      const characterResponse = await axios.get(characterUrl);
+      const character = characterResponse.data;
+      return character.name;
+    });
 
-      // Iterate through characters in the movie
-      movie.characters.forEach((characterUrl) => {
-        // Make a request to get character details
-        request(characterUrl, (error, response, body) => {
-          if (error) {
-            console.error('Error:', error);
-          } else if (response.statusCode !== 200) {
-            console.error('Invalid status code:', response.statusCode);
-          } else {
-            const character = JSON.parse(body);
-            console.log(character.name);
-          }
-        });
-      });
-    }
-  });
+    // Wait for all character requests to complete
+    const characterNames = await Promise.all(characterRequests);
+
+    // Print character names
+    characterNames.forEach((name) => {
+      console.log(name);
+    });
+
+  } catch (error) {
+    console.error('Error:', error);
+  }
 }
 
 // Usage example: Specify the movie ID as an argument (e.g., 3 for "Return of the Jedi")
