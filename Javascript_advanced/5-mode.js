@@ -13,13 +13,25 @@ function main() {
     const darkMode = changeMode(12, 'bold', 'capitalize', 'black', 'white');
     const screamMode = changeMode(12, 'normal', 'lowercase', 'white', 'black');
 
-    const spookyButton = document.getElementById('spookyButton');
-    const darkModeButton = document.getElementById('darkModeButton');
-    const screamModeButton = document.getElementById('screamModeButton');
+    // Add a paragraph and buttons to the body
+    const para = document.createElement('p');
+    para.innerText = 'Welcome Holberton!';
+    document.body.appendChild(para);
 
+    const spookyButton = document.createElement('button');
+    spookyButton.textContent = 'Spooky';
     spookyButton.addEventListener('click', spooky);
-    darkModeButton.addEventListener('click', darkMode);
-    screamModeButton.addEventListener('click', screamMode);
-}
+    document.body.appendChild(spookyButton);
 
+    const darkModeButton = document.createElement('button');
+    darkModeButton.textContent = 'Dark mode';
+    darkModeButton.addEventListener('click', darkMode);
+    document.body.appendChild(darkModeButton);
+
+    const screamModeButton = document.createElement('button');
+    screamModeButton.textContent = 'Scream Mode';
+    screamModeButton.addEventListener('click', screamMode);
+    document.body.appendChild(screamModeButton);
+}
+// Call the main function to initialize the page
 main();
