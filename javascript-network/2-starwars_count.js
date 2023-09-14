@@ -1,6 +1,6 @@
 const request = require('request');
-
-module.exports = function countMoviesWithWedgeAntilles(apiUrl) {
+const apiUrl = 'https://swapi-api.alx-tools.com/api/films/';
+function countMoviesWithWedgeAntilles(apiUrl) {
   // Define the character ID for Wedge Antilles
   const characterId = 18;
 
@@ -23,5 +23,5 @@ module.exports = function countMoviesWithWedgeAntilles(apiUrl) {
     console.log(`Number of films with Wedge Antilles: ${filmsWithWedgeAntilles.length}`);
   });
 };
-const apiUrl = 'https://swapi-api.alx-tools.com/api/films/';
+
 countMoviesWithWedgeAntilles(apiUrl);
