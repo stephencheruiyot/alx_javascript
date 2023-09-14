@@ -42,5 +42,3 @@ function countMoviesWithWedgeAntilles(apiUrl, characterId) {
   });
 }
 
-// Call the function to count movies with "Wedge Antilles"
-countMoviesWithWedgeAntilles(apiUrl, characterId);
