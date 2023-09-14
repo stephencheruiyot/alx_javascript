@@ -18,18 +18,4 @@ request.get(url, (error, response, body) => {
     process.exit(1);
   }
 
-  // Check if the request was successful (status code 200)
-  if (response.statusCode === 200) {
-    // Write the response body to a file
-    fs.writeFile(filePath, body, { encoding: utf8 }, (err) => {
-      if (err) {
-        console.error('Error writing to the file:', err);
-        process.exit(1);
-      }
-      console.log(`Webpage content saved to ${filePath} successfully.`);
-    });
-  } else {
-    console.error(`Failed to fetch the URL. Status code: ${response.statusCode}`);
-    process.exit(1);
-  }
 });
