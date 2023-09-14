@@ -1,11 +1,19 @@
 #!/usr/bin/node
 const request = require('request');
 
-const apiUrl = 'https://swapi-api.alx-tools.com/api/films/'
+const apiUrl = 'https://swapi-api.alx-tools.com/api/films/';
 
 // Make a GET request to the Star Wars API
-request(apiUrl, (response, body) => {
-  
+request(apiUrl, (error, response, body) => {
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  if (response.statusCode !== 200) {
+    console.error(`Error: ${response.statusCode}`);
+    return;
+  }
 
   // Parse the API response
   const data = JSON.parse(body);
