@@ -1,39 +1,51 @@
-const axios = require('axios');
+const request = require('request');
 
-// Function to fetch and print characters from a Star Wars movie
-async function printCharactersFromMovie(movieId) {
-  try {
-    // Fetch movie details
-    const movieResponse = await axios.get(`https://swapi.dev/api/films/${movieId}/`);
-    const movie = movieResponse.data;
+// Replace 'YOUR_API_KEY' with your actual API key if needed (not always required)
+const API_KEY = 'YOUR_API_KEY';
 
-    console.log(`Characters in "${movie.title}":`);
+// Movie ID
+const movieId = process.argv[2];
+
+if (!movieId) {
+  console.error('Please provide a movie ID as the first argument.');
+  process.exit(1);
+}
+
+// Define the URL to fetch the movie details
+const movieURL = `https://swapi.dev/api/films/${movieId}/`;
+
+// Function to fetch and print character names for a given movie
+function fetchCharacters(movieURL) {
+  request(movieURL, { json: true }, (error, response, body) => {
+    if (error) {
+      console.error('Error fetching movie data:', error);
+      return;
+    }
+
+    if (response.statusCode !== 200) {
+      console.error('Error:', response.statusCode, body);
+      return;
+    }
+
+    console.log(`Characters in Star Wars Episode ${body.episode_id}: ${body.title}`);
     console.log('------------------------');
 
-    // Create an array of character request promises
-    const characterRequests = movie.characters.map(async (characterUrl) => {
-      const characterResponse = await axios.get(characterUrl);
-      const character = characterResponse.data;
-      return character.name;
+    body.characters.forEach((characterURL) => {
+      request(characterURL, { json: true }, (charError, charResponse, charBody) => {
+        if (charError) {
+          console.error('Error fetching character data:', charError);
+          return;
+        }
+
+        if (charResponse.statusCode !== 200) {
+          console.error('Error:', charResponse.statusCode, charBody);
+          return;
+        }
+
+        console.log(charBody.name);
+      });
     });
-
-    // Wait for all character requests to complete
-    const characterNames = await Promise.all(characterRequests);
-
-    // Print character names
-    characterNames.forEach((name) => {
-      console.log(name);
-    });
-
-  } catch (error) {
-    console.error('Error:', error);
-  }
+  });
 }
 
-// Usage example: Specify the movie ID as an argument (e.g., 3 for "Return of the Jedi")
-const movieId = process.argv[2];
-if (!movieId) {
-  console.error('Please provide a movie ID as an argument.');
-} else {
-  printCharactersFromMovie(movieId);
-}
+fetchCharacters(movieURL);
