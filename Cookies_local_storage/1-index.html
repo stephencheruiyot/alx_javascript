@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Example</title>
+</head>
+<body>
+    <h1>Login to the website</h1>
+    <input type="text" id="firstname" placeholder="First Name">
+    <input type="text" id="email" placeholder="Email">
+    <button onclick="setCookies()">Log me in</button>
+    <h1>Cookies</h1>
+    <button onclick="showCookies()">Show the cookies</button>
+    <p id="cookies"></p>
+
+    <script>
+        function setCookies() {
+            const firstnameValue = document.getElementById('firstname').value;
+            const emailValue = document.getElementById('email').value;
+
+            // Set cookies to expire in 10 days
+            const expiryDate = new Date();
+            expiryDate.setDate(expiryDate.getDate() + 10);
+
+            document.cookie = `firstname=${firstnameValue}; expires=${expiryDate.toUTCString()}`;
+            document.cookie = `email=${emailValue}; expires=${expiryDate.toUTCString()}`;
+        }
+
+        function showCookies() {
+            const cookiesParagraph = document.getElementById('cookies');
+            cookiesParagraph.innerHTML = 'Cookies:';
+            const cookies = document.cookie.split('; ');
+
+            cookies.forEach(cookie => {
+                const [name, value] = cookie.split('=');
+                cookiesParagraph.innerHTML += `<br>${name}: ${value}`;
+            });
+        }
+    </script>
+</body>
+</html>
